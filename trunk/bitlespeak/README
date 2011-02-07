@@ -1,0 +1,62 @@
+Welcome to BitleSpeak 
+---------------------
+
+Version 0.1.2 July 20, 2010
+
+  BitleSpeak is a minimalist text to speech toolbar for UNIX like operating 
+systems. BitleSpeak has all the basic features of a tts front end, with more
+advanced features like mp3 encoding, and follow along highlighting coming
+in the near future. In addition to being actively developed, Bitle has one other
+advantage over other speech toolbars, that is the ability to support multiple 
+speech engines, and audio subsystems. No more dreading machines with 
+pulseaudio; just set it and forget it. Note this is not a full screen reader
+it only reads text from within documents, and web-pages. If you need a screen
+reader get Orca.
+
+Dependencies
+------------
+
+To run BitleSpeak you need 
+python v 2.6 (should work with v 2.5 also)
+pygtk v 2.17 or higher (may work with 2.16 test this let me know)
+
+A Supported Speech back-end configured 
+
+Supported Speech Backends
+------------------------
+
+* Speech Dispatcher/OpenTTS: plugin (bitle.SSIPClient)
+* festival: (plugin bitle.FestivalClient)
+   + Warning this has issues under pulseaudio
+* espeak: plugin (bitle.EspeakPipe)
+
+How to use
+----------
+
+To use without installing just untar the distribution package
+copy one of the config files from docs/ to $HOME/.bitle.cf and edit to taste
+
+To install install and use run setup.py install, and do the same as above
+The rest of the docs and example config files will be in 
+sys.prefix/share/doc/bitlespeak
+
+Known bugs:
+----------
+
+pulseaudio support is very buggy.
+
+ZOMG i found a bug
+-----------------
+
+Report it to the issue tracker @ http://github.com/marnold/BitleSpeak
+if you prefer e-mail see below
+
+Contact information
+-------------------
+
+Matt Arnold <mattarnold5@gmail.com>
+
+I also have a Forum  for discussion of this package, and upcoming 
+packages. Find that at http://marnold.info/forum
+
+
