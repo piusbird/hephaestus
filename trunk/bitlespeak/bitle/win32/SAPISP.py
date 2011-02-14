@@ -70,6 +70,10 @@ class SAPISP(object):
     def resume(self):
         self.spv.resume()
         return
+    
+    def is_running(self):
+    
+        return self.spv.query_running_state() - 1
     def set_parm(self, key, val):
         
         self.drvparm[key] = val

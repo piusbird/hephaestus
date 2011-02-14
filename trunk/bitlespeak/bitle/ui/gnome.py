@@ -1,5 +1,6 @@
 
-## File bitlespeak.py: BitleSpeak Main program 
+## Module bitle.ui.gnome
+## Purpose: gtk ui for bitlespeak
 ## Matt Arnold <matt@thegnuguru.org> 6-30-10
 ##
 ## Copyright (c) 2010 Matt Arnold
@@ -36,6 +37,7 @@ class BitleSpeak(object):
         self.builder.add_from_file(ui_file_path)
         self.txtbuffers = [] ## Remember viewer goes in first
         dbg = self.builder.connect_signals(self)
+        self.paused = False
         self.win = self.builder.get_object("mainWindow")
         tmp = self.builder.get_object("viewerBox")
         self.txtbuffers.append(tmp.get_buffer())
@@ -62,10 +64,9 @@ class BitleSpeak(object):
         else:
             brd = gtk.clipboard_get()
             tts = str(brd.wait_for_text())
-        self.running = True
         self.txtbuffers[0].set_text(tts)
         self.lspkr.speak(tts)
-        self.running = False
+        self.running = self.lspkr.is_running()
         return
     
     def on_pauseButton_clicked(self, widget, data=None):
@@ -73,9 +74,10 @@ class BitleSpeak(object):
 
         btn = self.builder.get_object("pauseButton")
         print "tracing stack for pause"
-        if self.running:
+        if self.lspkr.is_running():
             self.lspkr.pause()
             btn.set_label('Resume')
+            self.paused = True
         else:
             self.lspkr.resume()
             btn.set_label('Pause')
@@ -83,9 +85,9 @@ class BitleSpeak(object):
     
     def on_stopButton_clicked(self, widget, data=None):
         
-        if self.running:
+        if self.lspkr.is_running():
             self.lspkr.stop()
-            self.running = False
+            self.paused = False
         else:
             return
     

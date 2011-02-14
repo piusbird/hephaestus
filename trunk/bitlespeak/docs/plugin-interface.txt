@@ -92,6 +92,9 @@ load_plugin(stdlib.ConfigParser):
    configuration file section. If key is None return a dictionary holding the current 
    state configuration values.
   
+  def is_running(self)
+	Returns true if the driver is currently outputing text
+  
   def set_parm(self, key, value):
   
    Set configuration parmeter denoted by key to value. See above for further details   
