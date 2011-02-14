@@ -21,11 +21,16 @@
 ## You should have received a copy of the GNU General Public License
 ## along with BitleSpeak.  If not, see <http://www.gnu.org/licenses/>.
 import win32com.client
+import pythoncom
 from win32com.client import * # redundent in the strict sense but this is win32
 # so we will ignore lint on this
+import gtk
+import gobject
 from bitle.config import *
 from bitle.util import BitleError
 from threading import Thread
+
+
 
 class SAPISupervisor(object):
     """
@@ -52,7 +57,7 @@ class SAPISupervisor(object):
         @param vol reading volume a non-negitve int
         ditto for the default
         """
-
+        pythoncom.CoInitializeEx(pythoncom.COINIT_MULTITHREADED)
         self.sp_voice = win32com.client.Dispatch('Sapi.SpVoice')
 
         # Build the voice_table now or we'll keep rebuilding it
@@ -130,14 +135,18 @@ class SAPISupervisor(object):
         return self.sp_voice
     def speak(self, text):
 
-        if self.query_running_state() == 1: ## enum RunningState DONE
-            print "hit if #2"
-            t = SpeakerThread(self.sp_voice, text)        
+        if self.query_running_state() == 1: ## enum RunningState            
+           self.sp_voice.Speak(text, SVSFlagsAsync)
+        return
+            
+            
     def pause(self):
         """
         Pause the reading
         """
-        self.sp_voice.Pause()
+        print "pause s3"
+        x = self.sp_voice.Pause()
+        print "pause " + str(x)
         return
 
     def resume(self):
@@ -146,24 +155,11 @@ class SAPISupervisor(object):
         """
         self.sp_voice.Resume()
         return
-    # stub
+    # stub for future fast-forward/rewind support
     def skip(self, type, num):
         pass
  
-# this does not work must reimplement using gobjects threads 
-# lol @ MS for still using unmanged event loops in 2001 (not a typo) :)
-class SpeakerThread(Thread):
 
-    def __init__(self, spvoice, text):
 
-        self.sp_voice = spvoice
-        self.my_txt = text
 
-    def run():
-
-        txt_li = self.my_txt.split('.') # for Skip support
-        for str in txt_li:
-            self.sp_voice.Speak(str)
-        return        
-
-                
+    

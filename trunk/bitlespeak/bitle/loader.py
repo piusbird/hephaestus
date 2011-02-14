@@ -1,9 +1,9 @@
-## File: loader.py: BitleSpeak backend loader 
-## A sane way of loading configuration data and 
+## File: loader.py: BitleSpeak backend loader
+## A sane way of loading configuration data and
 ## Speaker plugins
 ## Matt Arnold <matt@thegnuguru.org> 6-30-10
 ##
-## Copyright (c) 2010 Matt Arnold 
+## Copyright (c) 2010 Matt Arnold
 ## BitleSpeak is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation, either version 3 of the License, or
@@ -26,7 +26,7 @@ from bitle.util import *
 cfg = ConfigParser.ConfigParser()
 
 def app_init(cfg_path = None):
-    
+
     d_cfg = os.path.abspath(BASE_PATH + '/bitle.cf')
     s_cfg = os.path.abspath(SITE_CONFIG_DIR + '/bitle.cf')
     w_cfg = os.path.abspath(BASE_PATH + '/bitle.ini')
@@ -50,26 +50,23 @@ def app_init(cfg_path = None):
         cfg.read(s_cfg)
     else:
         raise LoadError("Failed to load config file")
-    
+
     plugin = cfg.get("global", "speech_plugin")
     if DEBUG:
         print plugin[0:5]
-    
+
     if plugin[0:5] != 'bitle': ## security check
         ## if we are not in the right package BREAK OUT NOW
         print "Security Check failed"
         exit(2)
-    strexec = "from " + plugin + " import load_plugin" 
+    strexec = "from " + plugin + " import load_plugin"
     ## yet more security if we don't have a load_plugin this will fail
-    ## on a pile of uncaught exceptions. i still need to figure out some 
-    ## way of plugin signing 
+    ## on a pile of uncaught exceptions. i still need to figure out some
+    ## way of plugin signing
     exec(strexec)
     if load_plugin:
         spkr = load_plugin(cfg)
-        return (spkr, cfg) 
+        return (spkr, cfg)
     else:
-        raise LoadError("invalid plugin")  
+        raise LoadError("invalid plugin")
     return None
-
-
-    

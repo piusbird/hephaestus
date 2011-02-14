@@ -1,4 +1,4 @@
-## Bitlespeak static defines 
+## Bitlespeak static defines
 ## Matt Arnold 6/1/10
 ## Copyright (c) Matt Arnold
 ## Some rights reserved
@@ -45,11 +45,29 @@ READ_MSG = "Reading..."
 NREAD_MSG = "Not Reading"
 PREADING_MSG = "Paused..."
 
-## Microsoft Enums
+## Microsoft Enums Move to win32.enums after release
 
 #SpeechRunState
 MS_SRS_DONE = 1
 MS_SRS_SPEAKING = 2
+
+# SpeechVoiceSpeakFlags
+#'SpVoice Flags
+SVSFDefault = 0
+SVSFlagsAsync = 1
+SVSFPurgeBeforeSpeak = 2
+SVSFIsFilename = 4
+SVSFIsXML = 8
+SVSFIsNotXML = 16
+SVSFPersistXML = 32
+#   'Normalizer Flags
+SVSFNLPSpeakPunc = 64
+#    'Masks
+SVSFNLPMask = 64
+#SVSFParseMask = 
+SVSFVoiceMask = 127
+SVSFUnusedFlags = -128
+#End Enum
 
 # SAPI Constants
 SP_DEF_SETTING = 1024 # I need a large number keep above 1000 to be safe

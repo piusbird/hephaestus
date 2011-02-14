@@ -16,6 +16,7 @@
 import sys
 import os.path
 from bitle.util import *
+import pythoncom
 
 try:  
     import pygtk  
@@ -23,7 +24,8 @@ try:
 except: 
     pass  
 try:  
-    import gtk  
+    import gtk
+    import gobject
 except:  
     print("GTK Not Availible")
     sys.exit(1)
@@ -46,6 +48,8 @@ def main(*argv):
         print "Run this in debugger"
         exit(1)
 if __name__ == '__main__':
-    
+
+    pythoncom.CoInitializeEx(pythoncom.COINIT_MULTITHREADED)    
     main(sys.argv)
+    gobject.threads_init()
     gtk.main()

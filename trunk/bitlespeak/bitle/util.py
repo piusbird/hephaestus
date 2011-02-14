@@ -1,5 +1,5 @@
 ## File: util.py: Utility objects for bitle
-## Author: Matt Arnold <matt@thegnuguru.org> 
+## Author: Matt Arnold <matt@thegnuguru.org>
 ## Start-Date: 7/9/10
 ## This file is part of BitleSpeak
 
@@ -17,14 +17,14 @@
 import os
 
 class BitleError(Exception):
-    
+
     def __init__(self, value):
         self.parameter = value
     def __str__(self):
         return repr(self.parameter)
 
 class LoadError(BitleError):
-    
+
     def __init__(self, value):
         self.parameter = value
     def __str__(self):
@@ -32,18 +32,17 @@ class LoadError(BitleError):
 
 
 class SSIPError(BitleError):
-    
+
     def __init__(self, value):
         self.parameter = value
     def __str__(self):
         return repr(self.parameter)
-                                    
+
 
 def xsel_read():
-    
+
     fp = os.popen('xsel')
     retval = fp.read()
     if retval == None:
         retval = "no text selected"
     return retval + '\n'
-                                                           

@@ -69,8 +69,10 @@ class BitleSpeak(object):
         return
     
     def on_pauseButton_clicked(self, widget, data=None):
+        
 
         btn = self.builder.get_object("pauseButton")
+        print "tracing stack for pause"
         if self.running:
             self.lspkr.pause()
             btn.set_label('Resume')

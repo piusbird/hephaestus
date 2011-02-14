@@ -58,11 +58,13 @@ class SAPISP(object):
     def speak(self, text):
 
         self.spv.speak(text)
+        print "return from speak"
         return
     def stop(self):
         self.pause()
         return
     def pause(self):
+        print "pause s2"
         self.spv.pause()
         return
     def resume(self):
