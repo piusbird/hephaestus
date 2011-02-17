@@ -15,7 +15,7 @@
 ## along with BitleSpeak.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-
+from bitle.config import DEBUG
 class BitleError(Exception):
 
     def __init__(self, value):
@@ -39,6 +39,11 @@ class SSIPError(BitleError):
         return repr(self.parameter)
 
 
+def dbgprint(args):
+	
+	if DEBUG:
+		print(args)
+
 def xsel_read():
 
     fp = os.popen('xsel')
@@ -46,3 +51,4 @@ def xsel_read():
     if retval == None:
         retval = "no text selected"
     return retval + '\n'
+

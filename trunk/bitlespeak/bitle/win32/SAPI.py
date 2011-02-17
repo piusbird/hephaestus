@@ -28,6 +28,7 @@ import gtk
 import gobject
 from bitle.config import *
 from bitle.util import BitleError
+from bitle.util import dbgprint
 from threading import Thread
 
 
@@ -47,7 +48,7 @@ class SAPISupervisor(object):
     
     """
 
-    def __init__(self, voice = None , rate = SP_DEF_SETTING, vol = SP_DEF_SETTING ):
+    def __init__(self, voice=None , rate=SP_DEF_SETTING, vol=SP_DEF_SETTING):
         """
         Constructor for SPVoice
         @param voice: The voice description of the starting voice
@@ -73,11 +74,13 @@ class SAPISupervisor(object):
         if rate != SP_DEF_SETTING:
             self.sp_voice.Rate = rate
         if voice is not None:
-            self.sp_voice.Voice =  self.voice_table[voice]
+            self.sp_voice.Voice = self.voice_table[voice]
             # This will not catch an exception for an invalid voice
             # yet. TODO after beta
         if vol != SP_DEF_SETTING:
             self.sp_voice.Volume = vol
+		## comply with my interface
+		self.purge = False
 
 
     def get_voice_table(self):
@@ -135,8 +138,13 @@ class SAPISupervisor(object):
         return self.sp_voice
     def speak(self, text):
 
-        if self.query_running_state() == 1: ## enum RunningState            
-           self.sp_voice.Speak(text, SVSFlagsAsync)
+        if (self.query_running_state() == 1 and self.purge): ## enum RunningState            
+           self.sp_voice.Speak(text, SVSFlagsAsync, SVSFPurgeBeforeSpeak)
+		   self.purge = False
+		elif self.query_running_state() == 1:
+			self.sp_voice.Speak(text, SVSFlagsAsync)
+		
+			
         return
             
             
@@ -144,9 +152,9 @@ class SAPISupervisor(object):
         """
         Pause the reading
         """
-        print "pause s3"
+        dbgprint("pause s3")
         x = self.sp_voice.Pause()
-        print "pause " + str(x)
+        dbgprint("pause " + str(x))
         return
 
     def resume(self):
@@ -163,3 +171,4 @@ class SAPISupervisor(object):
 
 
     
+

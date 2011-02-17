@@ -52,7 +52,7 @@ class SAPISP(object):
 
     def __init__(self, spcom):
         self.spv = spcom
-        self.drvparm ={'DEBUG': 0}
+        self.drvparm = {'DEBUG': 0}
         return
 
     def speak(self, text):
@@ -62,6 +62,7 @@ class SAPISP(object):
         return
     def stop(self):
         self.pause()
+		self.spv.purge = True ## not a COM property so we can do direct xs
         return
     def pause(self):
         print "pause s2"
@@ -85,3 +86,4 @@ class SAPISP(object):
             return self.drvparm
         
         return self.drvparm[key]
+

@@ -18,6 +18,7 @@
 import sys
 import os.path
 from bitle.unix.util import *
+from bitle.util import dbgprint
 import gtk
 from bitle.config import *
 
@@ -25,7 +26,7 @@ from bitle.config import *
 
 class BitleSpeak(object):
     
-    def __init__(self, spk, xsel = False):
+    def __init__(self, spk, xsel=False):
         
         ## see PyGtk Docs and data/ in source tree
         self.builder = gtk.Builder()
@@ -73,13 +74,14 @@ class BitleSpeak(object):
         
 
         btn = self.builder.get_object("pauseButton")
-        print "tracing stack for pause"
+        dbgprint("tracing stack for pause")
         if self.lspkr.is_running():
             self.lspkr.pause()
             btn.set_label('Resume')
             self.paused = True
         else:
             self.lspkr.resume()
+			self.paused = False
             btn.set_label('Pause')
         return
     
@@ -104,8 +106,8 @@ class BitleSpeak(object):
     
     def on_prefButton_clicked(self, widget, data=None):
         
-            md = gtk.MessageDialog(self.win, 
-            gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, 
+            md = gtk.MessageDialog(self.win,
+            gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
             gtk.BUTTONS_CLOSE, PREF_MSG)
             md.run()
             md.destroy()
@@ -138,3 +140,4 @@ class BitleSpeak(object):
     		self.win.set_icon_from_file(chkpath)
     		return
     		
+
