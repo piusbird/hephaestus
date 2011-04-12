@@ -110,6 +110,7 @@
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
                 <property name="xalign">0.4699999988079071</property>
+                <signal name="clicked" handler="on_loadButton_clicked"/>
               </object>
               <packing>
                 <property name="top_attach">1</property>
@@ -124,6 +125,7 @@
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
                 <property name="yalign">0.47999998927116394</property>
+                <signal name="clicked" handler="on_saveButton_clicked"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>

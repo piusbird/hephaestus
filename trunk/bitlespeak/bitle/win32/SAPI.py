@@ -79,8 +79,8 @@ class SAPISupervisor(object):
             # yet. TODO after beta
         if vol != SP_DEF_SETTING:
             self.sp_voice.Volume = vol
-		## comply with my interface
-		self.purge = False
+        ## comply with my interface
+        self.purge = False
 
 
     def get_voice_table(self):
@@ -139,12 +139,10 @@ class SAPISupervisor(object):
     def speak(self, text):
 
         if (self.query_running_state() == 1 and self.purge): ## enum RunningState            
-           self.sp_voice.Speak(text, SVSFlagsAsync, SVSFPurgeBeforeSpeak)
-		   self.purge = False
-		elif self.query_running_state() == 1:
-			self.sp_voice.Speak(text, SVSFlagsAsync)
-		
-			
+            self.sp_voice.Speak(text, SVSFlagsAsync, SVSFPurgeBeforeSpeak)
+            self.purge = False
+        elif self.query_running_state() == 1:
+            self.sp_voice.Speak(text, SVSFlagsAsync)
         return
             
             

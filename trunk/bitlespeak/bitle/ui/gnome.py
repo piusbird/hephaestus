@@ -1,4 +1,3 @@
-
 ## Module bitle.ui.gnome
 ## Purpose: gtk ui for bitlespeak
 ## Matt Arnold <matt@thegnuguru.org> 6-30-10
@@ -19,6 +18,7 @@ import sys
 import os.path
 from bitle.unix.util import *
 from bitle.util import dbgprint
+from bitle.ui.widgets import *
 import gtk
 from bitle.config import *
 
@@ -37,6 +37,7 @@ class BitleSpeak(object):
         					'/Bitletoolbar.ui')
         self.builder.add_from_file(ui_file_path)
         self.txtbuffers = [] ## Remember viewer goes in first
+        self.current_file = None
         dbg = self.builder.connect_signals(self)
         self.paused = False
         self.win = self.builder.get_object("mainWindow")
@@ -81,7 +82,7 @@ class BitleSpeak(object):
             self.paused = True
         else:
             self.lspkr.resume()
-			self.paused = False
+            self.paused = False
             btn.set_label('Pause')
         return
     
@@ -116,8 +117,33 @@ class BitleSpeak(object):
     def on_mainWindow_destroy(self, widget, data=None):
         self.lspkr.stop()
         sys.exit(0)
-    
+
+    def on_loadButton_clicked(self, widget, data=None):
+
+        self.current_file = g_txt_fload(self.win)
+        if self.current_file != None:
+            txt = open(self.current_file).read()
+            self.txtbuffers[1].set_text(txt)
+
+    def on_saveButton_clicked(self, widget, data=None):
+        
+        if self.current_file == None:
+            self.current_file = g_txt_fsave(self.win)
+            if self.current_file != None:
+                start, end = self.txtbuffers[1].get_bounds()
+                txt = self.txtbuffers[1].get_text(start, end)
+                fp = open(self.current_file, 'w')
+                fp.write(txt)
+        else:
+            start, end = self.txtbuffers[1].get_bounds()
+            txt = self.txtbuffers[1].get_text(start, end)
+            fp = open(self.current_file, 'w')
+            fp.write(txt)
+        
+
+        
     on_quitButton_clicked = on_mainWindow_destroy ## make gtk happy
+    
     
     ## now a hack to get the icon in place
     def _icon(self):

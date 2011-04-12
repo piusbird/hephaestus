@@ -62,7 +62,7 @@ class SAPISP(object):
         return
     def stop(self):
         self.pause()
-		self.spv.purge = True ## not a COM property so we can do direct xs
+        self.spv.purge = True ## not a COM property so we can do direct xs
         return
     def pause(self):
         print "pause s2"
