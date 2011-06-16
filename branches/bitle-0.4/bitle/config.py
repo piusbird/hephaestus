@@ -23,7 +23,7 @@ BUFFSIZE = 2048 ## expecting 2^10 bytes lets double that
 OK_STATE = '2' ## see ssip docs]
 CLIENT_NAME = ":bittlespeak:shandler"
 
-DEBUG = 0 
+DEBUG = 1 
 ## needed by plugin loader
 BASE_PATH = '.'
 DATA_DIR = BASE_PATH + '/data'

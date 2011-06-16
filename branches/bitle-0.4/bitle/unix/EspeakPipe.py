@@ -48,9 +48,12 @@ class EspeakPipe(object):
     # Ok this will be weird but due to how this engine works we need some non-public  
     # methods for pipe control here before we can actually implement the interface
     
-    def _running(self):
+    def is_running(self):
         
         return self.running
+        
+    # new interface symbol
+    _running = is_running
     def speak(self, text):
         
        # if self._running():  ## We don't permit multijobs in this driver
