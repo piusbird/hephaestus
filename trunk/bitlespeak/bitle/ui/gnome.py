@@ -34,7 +34,8 @@ class BitleSpeak(object):
                                        + '/data/Bitletoolbar.ui')
         if not os.path.isfile(ui_file_path):
         	ui_file_path = os.path.abspath(SITE_DATA_DIR + 
-        					'/Bitletoolbar.ui')
+        					'/Bitletoolbar.ui') # FIX THIS as soon as ui.widgets.app_error is done
+        	# it doesn't take into account the case where data/ is missing 
         self.builder.add_from_file(ui_file_path)
         self.txtbuffers = [] ## Remember viewer goes in first
         self.current_file = None
@@ -53,7 +54,8 @@ class BitleSpeak(object):
             print "Unbound Events " + str(dbg)
         self.running = False  ## we don't want a seperate resume widget
         ## so this is used by play/stop widgets to determine behavior
-        tspk, tcfg = spk ## tuple packing is apperently local scope only 
+        tspk, tcfg = spk ## tuple packing is apperently local scope only
+        self.configparser = tcfg # how come i didn't store that before?
         self.xsel = xsel 
         self.lspkr = tspk
     

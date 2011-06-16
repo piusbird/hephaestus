@@ -138,9 +138,10 @@ class SAPISupervisor(object):
         return self.sp_voice
     def speak(self, text):
 
-        if (self.query_running_state() == 1 and self.purge): ## enum RunningState            
-            self.sp_voice.Speak(text, SVSFlagsAsync, SVSFPurgeBeforeSpeak)
+        if (self.query_running_state() == 0 and self.purge): ## enum RunningState            
+            self.sp_voice.Speak(text, SVSFlagsAsync + SVSFPurgeBeforeSpeak)
             self.purge = False
+            self.resume()
         elif self.query_running_state() == 1:
             self.sp_voice.Speak(text, SVSFlagsAsync)
         return

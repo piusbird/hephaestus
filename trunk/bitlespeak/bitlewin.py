@@ -17,35 +17,37 @@ import sys
 import os.path
 from bitle.util import *
 import pythoncom
-
-try:  
-    import pygtk  
-    pygtk.require("2.0")  
-except: 
-    pass  
-try:  
-    import gtk
-    import gobject
-except:  
-    print("GTK Not Availible")
-    sys.exit(1)
+import gobject
+import gtk
+from bitle.ui.widgets import app_error
+# remove the Traditional pygtk require semantics doesn't work once compiled
+# so we shall assume that people downloading source code have build deps installed
 
 from bitle import loader
 from bitle.config import *
 from bitle.ui.gnome import BitleSpeak
 
 
-def main(*argv):
-
+def test(test_num):
+    from bitle.win32.SAPI import SAPISupervisor
+    spv = SAPISupervisor()
+    if test_num == 1:
+        dict = spv.get_voice_table()
+        vlist = dict.items()
+        for i in vlist:
+            print(i)
+    exit(3)
+def main(argv):
+    print argv
+    if len(argv) > 1 and argv[1] == 'lsvoices':
+        test(1)
     l_res = loader.app_init()
-    print "app init done"
     if l_res:
-        print "hit if"
         from bitle.win32.SAPISP import load_plugin
         spkr = load_plugin(l_res)
         app = BitleSpeak((spkr,l_res), xsel = False)
     else:
-        print "Run this in debugger"
+        app_error(E_FATAL, "Loader error, please see website\n http://code.mornold.info/btilespeak/docs", 0)
         exit(1)
 if __name__ == '__main__':
 

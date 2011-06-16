@@ -18,10 +18,12 @@
 
 import gtk # we assume pygtk is already init by this point
 import platform
-
+from bitle.config import *
 NATIVE_WSET = platform.system() # will eventually be more then this
 # so its here rather then bitle.config
 
+FLAGS_FATAL = 0x000 | 0x010
+FLAGS_WARN = 0x000 | 0x030
 def g_txt_fload(parent=None):
     dialog = gtk.FileChooserDialog("Open..",
                                parent,
@@ -45,6 +47,13 @@ def g_txt_fload(parent=None):
     return None
 
 
+def g_msg_dialog(wParent, msg_strig):
+    md = gtk.MessageDialog(wParent,
+    gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
+    gtk.BUTTONS_CLOSE, msg_string)
+    md.run()
+    md.destroy()
+
 def g_txt_fsave(parent=None):
     dialog = gtk.FileChooserDialog("Save...",
                                parent,
@@ -67,3 +76,19 @@ def g_txt_fsave(parent=None):
         
     dialog.destroy()
     return None
+
+def app_error(error_type, error_str, wParent):
+
+    if NATIVE_WSET == 'Windows':
+        import win32gui
+        if error_type == E_FATAL:
+            win32gui.MessageBox(wParent, error_str, "Error", FLAGS_FATAL)
+            exit(E_FATAL)
+        elif error_type == E_WARN:
+            win32gui.MessageBox(wParent, error_str, "Error", FLAGS_WARN)
+    else:
+        if error_type == E_FATAL:
+            g_msg_dialog(wParent, error_str)
+            exit(E_FATAL)
+        elif error_type == E_WARN:
+            g_msg_dialog(wParent, error_str)

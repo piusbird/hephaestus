@@ -27,22 +27,27 @@ if platform.system() != 'Windows':
 _short_name = "SAPISP"
 
 def load_plugin(cfg):
+
+    l_rate = l_voice = l_vol = None # placeholders for parsed values from ini file    
       
-##    voice = cfg.get(_short_name, 'voice')
-##    if voice == 'default':
-##        voice = None
-##    rate = cfg.get(_short_name, 'rate')
-##    if rate == 'default':
-##        rate = SP_DEF_SETTING
-##    else:
-##        rate = int(rate)
-##
-##    vol = cfg.get(_short_name, 'volume')
-##    if vol != 'default':
-##        vol = SP_DEF_SETTING
-##    else:
-##        vol = int(vol)
-    sp_com = SAPISupervisor()
+    c_voice = cfg.get(_short_name, 'voice')
+    if c_voice == 'default':
+        l_voice = None
+    else:
+        l_voice = c_voice
+    
+    c_rate = cfg.get(_short_name, 'rate')
+    if c_rate == 'default':
+        l_rate = SP_DEF_SETTING
+    else:
+        l_rate = int(c_rate)
+
+    c_vol = cfg.get(_short_name, 'volume')
+    if c_vol == 'default':
+        l_vol = SP_DEF_SETTING
+    else:
+        l_vol = int(c_vol)
+    sp_com = SAPISupervisor(l_voice, l_rate, l_vol)
     spkr = SAPISP(sp_com)
     dbg = DEBUG
     spkr.set_parm("DEBUG", dbg)
@@ -74,7 +79,12 @@ class SAPISP(object):
     
     def is_running(self):
     
-        return self.spv.query_running_state() - 1
+        rs = self.spv.query_running_state()
+        if rs < 2:
+            return False
+        else:
+            return True
+        return False # Never get here just here for syntax sale
     def set_parm(self, key, val):
         
         self.drvparm[key] = val

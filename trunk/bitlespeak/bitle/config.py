@@ -23,7 +23,7 @@ BUFFSIZE = 2048 ## expecting 2^10 bytes lets double that
 OK_STATE = '2' ## see ssip docs]
 CLIENT_NAME = ":bittlespeak:shandler"
 
-DEBUG = 1
+DEBUG = 0 
 ## needed by plugin loader
 BASE_PATH = '.'
 DATA_DIR = BASE_PATH + '/data'
@@ -32,8 +32,8 @@ SITE_DATA_DIR = sys.prefix + '/share/bitlespeak'
 
 ## GTK author metadata
 
-APP_NAME = 'LitleFrog Reader'
-APP_VER = '0.4.0-prealpha'
+APP_NAME = 'BitleSpeak'
+APP_VER = '0.4.0-beta1'
 APP_AUTHORS = ["Matt Arnold"]
 APP_COPY ='GPLv3'
 APP_DESC = 'A little text to speech toolbar'
@@ -46,7 +46,9 @@ NREAD_MSG = "Not Reading"
 PREADING_MSG = "Paused..."
 
 ## Microsoft Enums Move to win32.enums after release
-
+# Error types
+E_WARN = 1
+E_FATAL = 2
 #SpeechRunState
 MS_SRS_DONE = 1
 MS_SRS_SPEAKING = 2
