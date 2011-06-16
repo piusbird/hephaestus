@@ -10,7 +10,7 @@
 [global]
 
 ; Global options these will affect the entire app
-speech_plugin = bitle.SSIPClient ; Python file that will be used as your
+speech_plugin = bitle.unix.SSIPClient ; Python file that will be used as your
 ; speech backend plugin as SSIPClient.py is the only thing stable right now
 ; you'd best leave it alone
 
