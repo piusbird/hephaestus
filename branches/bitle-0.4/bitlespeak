@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+## File bitlespeak.py: BitleSpeak Main program 
+## Matt Arnold <matt@thegnuguru.org> 6-30-10
+##
+## Update 6/16/11 Bring in line with new ui.* packages 
+## have i really been working on this for a year
+## Copyright (c) 2010 Matt Arnold
+## BitleSpeak is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+## BitleSpeak is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+## You should have received a copy of the GNU General Public License
+## along with BitleSpeak.  If not, see <http://www.gnu.org/licenses/>.
+ 
+import sys
+import os.path
+from bitle.util import *
+from bitle.unix.util import *
+from bitle.ui.gnome import BitleSpeak
+try:  
+    import pygtk  
+    pygtk.require("2.0")  
+except: 
+    pass  
+try:  
+    import gtk  
+except:  
+    print("GTK Not Availible")
+    sys.exit(1)
+
+from bitle import loader
+from bitle.config import *
+
+
+
+def main(*argv):
+    
+    try:
+        spkr, cfg = loader.app_init()
+        print str(spkr)
+    except Exception as err:
+        print "error " + str(err)
+        sys.exit(2)
+    
+    spkr = loader.app_init()
+    xs = cfg.getboolean("gui", "use_xsel")
+    app = BitleSpeak(spkr, xsel = xs)
+    
+
+
+		
+
+if __name__ == '__main__':
+    
+    main(sys.argv)
+    if DEBUG:
+        print "GTK started"
+    gtk.main()        
+   
+    
